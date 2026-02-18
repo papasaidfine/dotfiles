@@ -1,5 +1,7 @@
 For python project, please always use "uv". Do not mess up the global python/python3.
 
+For JavaScript/TypeScript projects, always use "pnpm" over "npm" unless the project already uses npm (e.g., has a package-lock.json).
+
 ## Always Create Agent Teams for Parallel Work
 
 When a task goes through planning and the plan reveals independent, parallelizable subtasks:
