@@ -50,7 +50,9 @@
       "Bash(awk *)",
       "Bash(xargs *)",
       "Bash(tee *)",
-      "Fetch(https://*)"
+      "Fetch(https://*)",
+      "WebSearch",
+      "WebFetch(*)"
     ]
   },
   "enabledPlugins": {
