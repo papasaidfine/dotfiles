@@ -67,6 +67,5 @@
     "frontend-design@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "alwaysThinkingEnabled": true
 }
