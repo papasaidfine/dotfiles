@@ -17,6 +17,19 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/ma
 
 Each component is optional — the script asks before installing anything.
 
+## Recommended tools
+
+These are not installed by the bootstrap script but are useful to have:
+
+- [fnm](https://github.com/Schniz/fnm) — Fast Node.js version manager
+- [uv](https://github.com/astral-sh/uv) — Fast Python package manager
+- [pnpm](https://github.com/pnpm/pnpm) — Efficient Node.js package manager
+- [Claude Code](https://github.com/anthropics/claude-code) — Anthropic's CLI for Claude
+- [glow](https://github.com/charmbracelet/glow) — Render markdown in the terminal
+- [yazi](https://github.com/sxyazi/yazi) — Terminal file manager
+- [jq](https://github.com/jqlang/jq) — JSON processor for the command line
+- [ripgrep](https://github.com/BurntSushi/ripgrep) — Fast grep alternative, used by neovim Telescope
+
 ## Manual usage
 
 ```bash
