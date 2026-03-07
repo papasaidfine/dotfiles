@@ -44,6 +44,50 @@ if ask "Install tmux plugin manager (tpm)?"; then
   fi
 fi
 
+# --- neovim (pre-built archive, no sudo) ---
+if ask "Install neovim from pre-built archive?"; then
+  if command -v nvim >/dev/null 2>&1; then
+    ok "nvim already installed: $(nvim --version | head -1)"
+  else
+    OS="$(uname -s)"
+    ARCH="$(uname -m)"
+    case "$OS" in
+      Linux)
+        case "$ARCH" in
+          x86_64)  NVIM_ARCHIVE="nvim-linux-x86_64.tar.gz" ;;
+          aarch64) NVIM_ARCHIVE="nvim-linux-arm64.tar.gz" ;;
+          *) fail "Unsupported Linux architecture: $ARCH"; exit 1 ;;
+        esac
+        ;;
+      Darwin)
+        case "$ARCH" in
+          x86_64) NVIM_ARCHIVE="nvim-macos-x86_64.tar.gz" ;;
+          arm64)  NVIM_ARCHIVE="nvim-macos-arm64.tar.gz" ;;
+          *) fail "Unsupported macOS architecture: $ARCH"; exit 1 ;;
+        esac
+        ;;
+      *) fail "Unsupported OS: $OS"; exit 1 ;;
+    esac
+
+    NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/$NVIM_ARCHIVE"
+    NVIM_INSTALL_DIR="$HOME/.local"
+
+    info "Downloading $NVIM_ARCHIVE ..."
+    TMP_DIR="$(mktemp -d)"
+    curl -fSL -o "$TMP_DIR/$NVIM_ARCHIVE" "$NVIM_URL"
+
+    info "Extracting to $NVIM_INSTALL_DIR ..."
+    mkdir -p "$NVIM_INSTALL_DIR"
+    tar -xzf "$TMP_DIR/$NVIM_ARCHIVE" -C "$TMP_DIR"
+    # merge archive contents (bin/, lib/, share/) into ~/.local
+    cp -r "$TMP_DIR"/${NVIM_ARCHIVE%.tar.gz}/* "$NVIM_INSTALL_DIR/"
+    rm -rf "$TMP_DIR"
+
+    export PATH="$NVIM_INSTALL_DIR/bin:$PATH"
+    ok "nvim installed: $(nvim --version | head -1)"
+  fi
+fi
+
 # --- lazyvim ---
 if ask "Install LazyVim config?"; then
   if ! command -v nvim >/dev/null 2>&1; then
