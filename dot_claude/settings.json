@@ -28,6 +28,7 @@
       "Bash(rm *)",
       "Bash(echo *)",
       "Bash(cd *)",
+      "Bash(cd * && *)",
       "Bash(pwd)",
       "Bash(which *)",
       "Bash(wc *)",
