@@ -2,6 +2,8 @@ For python project, please always use "uv". Do not mess up the global python/pyt
 
 For JavaScript/TypeScript projects, always use "pnpm" over "npm" unless the project already uses npm (e.g., has a package-lock.json).
 
+Never add "co-author by Claude"" to any commits, PRs, issues, comments or any other content.
+
 ## Always Create Agent Teams for Parallel Work
 
 When a task goes through planning and the plan reveals independent, parallelizable subtasks:
