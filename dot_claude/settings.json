@@ -6,16 +6,19 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "allow": [
-      "Bash(*)",
-      "Fetch(https://*)",
-      "WebSearch",
-      "WebFetch(*)",
-      "Agent(*)",
-      "Read(*)",
-      "Glob(*)",
-      "Grep(*)"
-    ]
+    "allow": [],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+      "Bash(rm -rf $HOME*)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(dd if=*)",
+      "Bash(mkfs *)",
+      "Bash(mkfs.*)"
+    ],
+    "defaultMode": "auto"
   },
   "enabledPlugins": {
     "code-simplifier@claude-plugins-official": true,
@@ -27,6 +30,13 @@
     "code-review@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
+  "sandbox": {
+    "excludedCommands": [
+      "docker *",
+      "docker-compose *"
+    ]
+  },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh"
+  "effortLevel": "xhigh",
+  "skipAutoPermissionPrompt": true
 }
