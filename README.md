@@ -31,6 +31,8 @@ These are not installed by the bootstrap script but are useful to have:
 - [yazi](https://github.com/sxyazi/yazi) — Terminal file manager
 - [jq](https://github.com/jqlang/jq) — JSON processor for the command line
 - [ripgrep](https://github.com/BurntSushi/ripgrep) — Fast grep alternative, used by neovim Telescope
+- [lazygit](https://github.com/jesseduffield/lazygit) — Terminal UI for git commands
+- [lazyport](https://github.com/papasaidfine/lazyport) — Terminal UI for managing local ports/processes
 
 ## oh-my-posh setup
 
