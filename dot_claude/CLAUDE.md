@@ -4,6 +4,8 @@ For JavaScript/TypeScript projects, always use "pnpm" over "npm" unless the proj
 
 Never add "co-author by Claude"" to any commits, PRs, issues, comments or any other content.
 
+Never add real email in github release note.
+
 ## Always Create Agent Teams for Parallel Work
 
 When a task goes through planning and the plan reveals independent, parallelizable subtasks:
