@@ -1,15 +1,21 @@
-For python project, please always use "uv". Do not mess up the global python/python3.
+## Package Managers
 
-For JavaScript/TypeScript projects, always use "pnpm" over "npm" unless the project already uses npm (e.g., has a package-lock.json).
+- Python: always use `uv`. Do not touch the global `python`/`python3`.
+- JavaScript/TypeScript: always use `pnpm` over `npm`, unless the project already uses npm (e.g. has `package-lock.json`).
 
-Never add "co-author by Claude"" to any commits, PRs, issues, comments or any other content.
+## Attribution
 
-Never add real email in github release note.
+- Never add "co-authored by Claude" (or similar) to commits, PRs, issues, comments, or any other content.
+- Never include a real email address in GitHub release notes.
+
+## Response Style
+
+- Keep user-facing responses (summaries, explanations, status updates) concise — I will ask for expansion if I want more detail.
+- This applies to communication only. Do not let it shorten or weaken planning, design depth, or code implementation.
 
 ## Always Create Agent Teams for Parallel Work
 
-When a task goes through planning and the plan reveals independent, parallelizable subtasks:
-- Always create an agent team to work on those subtasks concurrently instead of doing them sequentially.
-- Each teammate should get a clearly scoped, self-contained task with no cross-dependencies on other in-flight work.
-- Keep team size proportional to the number of truly independent work streams — don't over-parallelize tightly coupled changes.
+When planning reveals independent, parallelizable subtasks, dispatch an agent team to run them concurrently instead of sequentially:
+- Give each teammate a clearly scoped, self-contained task with no cross-dependencies on other in-flight work.
+- Size the team to the number of truly independent work streams — don't over-parallelize tightly coupled changes.
 - After all teammates finish, review and integrate their work, resolving any conflicts.
