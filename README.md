@@ -47,7 +47,7 @@ The nordtron theme is managed by chezmoi and will land at `~/.cache/oh-my-posh/t
 Add to `~/.bashrc`:
 
 ```bash
-eval "$(oh-my-posh init bash --config ~/.cache/oh-my-posh/themes/nordtron.omp.json)"
+eval "$("$HOME/.local/bin/oh-my-posh" init bash --config ~/.cache/oh-my-posh/themes/nordtron.omp.json)"
 ```
 
 ## Manual usage
