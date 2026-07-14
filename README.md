@@ -42,7 +42,14 @@ Install the binary:
 curl -s https://ohmyposh.dev/install.sh | bash -s
 ```
 
-The nordtron theme is managed by chezmoi and will land at `~/.cache/oh-my-posh/themes/nordtron.omp.json` after `chezmoi apply`. It includes a `console_title_template` so the terminal tab shows `user@host` automatically.
+The nordtron theme is managed by chezmoi and will land at `~/.cache/oh-my-posh/themes/nordtron.omp.json` after `chezmoi apply`. It includes a `console_title_template` so the terminal tab shows `user@host` automatically. To show a friendly alias instead of the real hostname (useful on cloud VMs named like `ip-172-31-19-84`), define it per machine in `~/.config/chezmoi/chezmoi.toml` before running `chezmoi apply`:
+
+```toml
+[data]
+    hostAlias = "risk-ranger"
+```
+
+Machines without `hostAlias` keep showing the real hostname.
 
 Add to `~/.bashrc`:
 
