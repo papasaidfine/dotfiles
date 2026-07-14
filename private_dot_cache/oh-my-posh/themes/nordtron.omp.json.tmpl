@@ -79,6 +79,6 @@
     }
   ],
   "final_space": true,
-  "console_title_template": "{{ .UserName }}@[[ if hasKey . "hostAlias" ]][[ .hostAlias ]][[ else ]]{{ .HostName }}[[ end ]]",
+  "console_title_template": "{{ .UserName }}@[[ if and (hasKey . "hostAlias") .hostAlias ]][[ .hostAlias ]][[ else ]]{{ .HostName }}[[ end ]]",
   "version": 4
 }
