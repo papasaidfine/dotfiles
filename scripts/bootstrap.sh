@@ -15,6 +15,10 @@ warn() { printf "\033[1;33mWARN:\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m OK:\033[0m %s\n" "$1"; }
 fail() { printf "\033[1;31mERR:\033[0m %s\n" "$1"; }
 
+# Ensure user-local bin (where chezmoi/nvim get installed) is on PATH, so re-runs
+# detect prior installs and skip them instead of redoing the work.
+export PATH="$HOME/.local/bin:$PATH"
+
 # --- chezmoi ---
 if ask "Install chezmoi and apply dotfiles?"; then
   if command -v chezmoi >/dev/null 2>&1; then
@@ -22,7 +26,6 @@ if ask "Install chezmoi and apply dotfiles?"; then
   else
     info "Installing chezmoi to ~/.local/bin ..."
     sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
-    export PATH="$HOME/.local/bin:$PATH"
   fi
   info "Applying dotfiles ..."
   chezmoi init papasaidfine/dotfiles --apply
@@ -83,7 +86,6 @@ if ask "Install neovim from pre-built archive?"; then
     cp -r "$TMP_DIR"/${NVIM_ARCHIVE%.tar.gz}/* "$NVIM_INSTALL_DIR/"
     rm -rf "$TMP_DIR"
 
-    export PATH="$NVIM_INSTALL_DIR/bin:$PATH"
     ok "nvim installed: $(nvim --version | head -1)"
   fi
 fi
