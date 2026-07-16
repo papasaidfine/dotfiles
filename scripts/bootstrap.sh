@@ -32,21 +32,6 @@ if ask "Install chezmoi and apply dotfiles?"; then
   ok "Dotfiles applied"
 fi
 
-# --- tmux plugin manager ---
-if ask "Install tmux plugin manager (tpm)?"; then
-  TPM_DIR="$HOME/.tmux/plugins/tpm"
-  if [ -d "$TPM_DIR" ]; then
-    ok "tpm already installed at $TPM_DIR"
-  else
-    if ! command -v git >/dev/null 2>&1; then
-      fail "git is required but not found"; exit 1
-    fi
-    info "Cloning tpm ..."
-    git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
-    ok "tpm installed — launch tmux and press prefix + I to install plugins"
-  fi
-fi
-
 # --- neovim (pre-built archive, no sudo) ---
 if ask "Install neovim from pre-built archive?"; then
   if command -v nvim >/dev/null 2>&1; then

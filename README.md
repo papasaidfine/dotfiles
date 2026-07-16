@@ -4,15 +4,14 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 ## What's included
 
-- **tmux** — Vi-mode keybindings, true color support, Nord theme, TPM plugin manager
+- **tmux** — Vi-mode keybindings, true color support, pane navigation/resize keybinds
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
-- **oh-my-posh** — Nordtron prompt theme (`~/.cache/oh-my-posh/themes/`)
 - **fish** — `zj` helper for machine-named zellij sessions (`~/.config/fish/functions/`)
 
 ## Quick start
 
-One-liner to bootstrap a fresh machine (installs chezmoi, dotfiles, tpm, lazyvim):
+One-liner to bootstrap a fresh machine (installs chezmoi, dotfiles, lazyvim):
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/bootstrap.sh)"
@@ -24,7 +23,6 @@ Each component is optional — the script asks before installing anything.
 
 These are not installed by the bootstrap script but are useful to have:
 
-- [oh-my-posh](https://ohmyposh.dev) — Shell prompt theme engine (see setup below)
 - [fnm](https://github.com/Schniz/fnm) — Fast Node.js version manager
 - [uv](https://github.com/astral-sh/uv) — Fast Python package manager
 - [pnpm](https://github.com/pnpm/pnpm) — Efficient Node.js package manager
@@ -38,27 +36,11 @@ These are not installed by the bootstrap script but are useful to have:
 - [zellij](https://github.com/zellij-org/zellij) — Terminal multiplexer and workspace (tmux alternative)
 - [fish](https://github.com/fish-shell/fish-shell) — User-friendly interactive shell
 
-## oh-my-posh setup
-
-Install the binary:
-
-```bash
-curl -s https://ohmyposh.dev/install.sh | bash -s
-```
-
-The nordtron theme is managed by chezmoi and lands at `~/.cache/oh-my-posh/themes/nordtron.omp.json` after `chezmoi apply`.
-
-Add to `~/.bashrc`:
-
-```bash
-eval "$("$HOME/.local/bin/oh-my-posh" init bash --config ~/.cache/oh-my-posh/themes/nordtron.omp.json)"
-```
-
 ## Terminal tab title
 
-Show `user@host` in the terminal tab, independent of oh-my-posh. Add the snippet for your shell.
+Show `user@host` in the terminal tab. Add the snippet for your shell.
 
-**bash** — add to `~/.bashrc` (after the oh-my-posh line, if you use it):
+**bash** — add to `~/.bashrc`:
 
 ```bash
 # Terminal tab title → user@host
