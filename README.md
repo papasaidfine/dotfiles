@@ -11,7 +11,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Quick start
 
-One-liner to bootstrap a fresh machine (installs chezmoi, dotfiles, lazyvim):
+One-liner to bootstrap a fresh machine (installs chezmoi, applies dotfiles, then optionally neovim + LazyVim):
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/bootstrap.sh)"
