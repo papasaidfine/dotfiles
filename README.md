@@ -5,6 +5,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 ## What's included
 
 - **tmux** — Vi-mode keybindings, true color support, Nord theme, TPM plugin manager
+- **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
 - **oh-my-posh** — Nordtron theme with terminal tab title (`~/.cache/oh-my-posh/themes/`)
 
@@ -58,6 +59,15 @@ Add to `~/.bashrc`:
 ```bash
 eval "$("$HOME/.local/bin/oh-my-posh" init bash --config ~/.cache/oh-my-posh/themes/nordtron.omp.json)"
 ```
+
+## Zellij configuration
+
+The configuration is managed by chezmoi and will land at `~/.config/zellij/config.kdl` after `chezmoi apply`.
+
+Key preference settings:
+1. **Compact Layout**: Enabled by default (`default_layout "compact"`)
+2. **Hide Frames**: Pane frames are disabled (`pane_frames false`)
+3. **Theme**: Nord theme (`theme "nord"`)
 
 ## Manual usage
 
