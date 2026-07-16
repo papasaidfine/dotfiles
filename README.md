@@ -6,7 +6,8 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
-- **fish** — `zj` helper for machine-named zellij sessions (`~/.config/fish/functions/`)
+- **fish** — `zj` helper + PATH setup (`~/.config/fish/`)
+- **bash** — `zj` helper (`~/.config/bash/zj.bash`)
 
 ## Quick start
 
@@ -35,36 +36,18 @@ These are not installed by the bootstrap script but are useful to have:
 - [zellij](https://github.com/zellij-org/zellij) — Terminal multiplexer and workspace
 - [fish](https://github.com/fish-shell/fish-shell) — User-friendly interactive shell
 
-## Terminal tab title
+## Machine identity in zellij
 
-Show `user@host` in the terminal tab. Add the snippet for your shell.
+`zj` attaches to — or creates — a zellij session named `user@<alias>`, so the machine is identifiable in zellij's status bar (and the outer terminal title). It's shell-independent — zellij owns the session name — so both shells provide the same `zj` command:
 
-**bash** — add to `~/.bashrc`:
-
-```bash
-# Terminal tab title → user@host
-__set_tab_title() { printf '\033]0;%s@%s\007' "$USER" "${HOSTNAME%%.*}"; }
-case "$PROMPT_COMMAND" in
-  *__set_tab_title*) ;;
-  *) PROMPT_COMMAND="__set_tab_title${PROMPT_COMMAND:+; $PROMPT_COMMAND}" ;;
-esac
-```
-
-For a friendly name on cloud VMs (e.g. `ip-172-31-19-84`), replace `${HOSTNAME%%.*}` with a literal string, or write a `~/.config/host-alias` file (see below).
-
-**fish** doesn't need this snippet — machine identity comes from the `zj` helper below (the zellij session name).
-
-**Inside zellij** the shell's title becomes the focused pane title, which zellij forwards to the outer terminal as `<session> | user@host` — the format (session-name prefix included) is not configurable, and is independent of `pane_frames`.
-
-## Machine identity in zellij (fish)
-
-fish ships a chezmoi-managed `zj` function (`~/.config/fish/functions/`). Run `zj` to attach to — or create — a zellij session named `user@<alias>`, so the machine shows in zellij's status bar and as the session-name half of the outer terminal title:
+- **fish** — provided automatically (chezmoi-managed function); just run `zj`.
+- **bash** — add `source ~/.config/bash/zj.bash` to `~/.bashrc`, then run `zj`.
 
 ```fish
 zj
 ```
 
-The `<alias>` comes from `~/.config/host-alias` — a single friendly line (e.g. `risk-ranger`) you write yourself, **per machine**. chezmoi does not manage this file; without it, `zj` falls back to the short hostname.
+`<alias>` is the first line of `~/.config/host-alias` (a friendly name you write per machine, e.g. `risk-ranger`); without that file it falls back to the short hostname. chezmoi does not manage `~/.config/host-alias`.
 
 ## Manual usage
 
