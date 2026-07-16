@@ -33,6 +33,8 @@ These are not installed by the bootstrap script but are useful to have:
 - [ripgrep](https://github.com/BurntSushi/ripgrep) — Fast grep alternative, used by neovim Telescope
 - [lazygit](https://github.com/jesseduffield/lazygit) — Terminal UI for git commands
 - [lazyport](https://github.com/papasaidfine/lazyport) — Terminal UI for managing local ports/processes
+- [zellij](https://github.com/zellij-org/zellij) — Terminal multiplexer and workspace (tmux alternative)
+- [fish](https://github.com/fish-shell/fish-shell) — User-friendly interactive shell
 
 ## oh-my-posh setup
 
