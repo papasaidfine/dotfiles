@@ -8,6 +8,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
 - **oh-my-posh** — Nordtron prompt theme (`~/.cache/oh-my-posh/themes/`)
+- **fish** — `zj` helper for machine-named zellij sessions (`~/.config/fish/functions/`)
 
 ## Quick start
 
@@ -68,18 +69,23 @@ case "$PROMPT_COMMAND" in
 esac
 ```
 
-**fish** — add to `~/.config/fish/config.fish`:
+For a friendly name on cloud VMs (e.g. `ip-172-31-19-84`), replace `${HOSTNAME%%.*}` with a literal string, or write a `~/.config/host-alias` file (see below).
+
+**fish** doesn't need this snippet — machine identity comes from the `zj` helper below (the zellij session name).
+
+**Inside a multiplexer** the bare-shell title behaves differently:
+- **tmux** — not forwarded to the outer tab (default `set-titles off`).
+- **zellij** — the shell's title becomes the focused pane title, which zellij forwards to the outer terminal as `<session> | user@host`. The format (session-name prefix included) is not configurable, and is independent of `pane_frames`.
+
+## Machine identity in zellij (fish)
+
+fish ships a chezmoi-managed `zj` function (`~/.config/fish/functions/`). Run `zj` to attach to — or create — a zellij session named `user@<alias>`, so the machine shows in zellij's status bar and as the session-name half of the outer terminal title:
 
 ```fish
-# Terminal tab title → user@host
-function fish_title
-    echo "$USER@"(prompt_hostname)
-end
+zj
 ```
 
-For a friendly name on cloud VMs (e.g. `ip-172-31-19-84`), replace `${HOSTNAME%%.*}` / `(prompt_hostname)` with a literal string.
-
-**Inside a multiplexer:** this only sets the title for a bare shell. Inside tmux it isn't forwarded to the outer tab (no `set-titles`). Inside zellij with `pane_frames false` (this repo's default) it isn't shown either — enable pane frames if you want it there.
+The `<alias>` comes from `~/.config/host-alias` — a single friendly line (e.g. `risk-ranger`) you write yourself, **per machine**. chezmoi does not manage this file; without it, `zj` falls back to the short hostname.
 
 ## Manual usage
 
