@@ -12,13 +12,13 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Quick start
 
-One-liner to bootstrap a fresh machine (installs chezmoi, dotfiles, tpm, lazyvim):
+One-liner to bootstrap a fresh machine (installs chezmoi, then tpm/neovim/lazyvim on request):
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/bootstrap.sh)"
 ```
 
-Each component is optional — the script asks before installing anything.
+Each step is optional — the script asks first. After pulling the dotfiles source, a menu lets you apply one config at a time (tmux, zellij, fish, Claude Code, oh-my-posh) or **Apply all** at once.
 
 ## Recommended tools
 
