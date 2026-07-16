@@ -4,7 +4,6 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 ## What's included
 
-- **tmux** — Vi-mode keybindings, true color support, pane navigation/resize keybinds
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
 - **fish** — `zj` helper for machine-named zellij sessions (`~/.config/fish/functions/`)
@@ -33,7 +32,7 @@ These are not installed by the bootstrap script but are useful to have:
 - [ripgrep](https://github.com/BurntSushi/ripgrep) — Fast grep alternative, used by neovim Telescope
 - [lazygit](https://github.com/jesseduffield/lazygit) — Terminal UI for git commands
 - [lazyport](https://github.com/papasaidfine/lazyport) — Terminal UI for managing local ports/processes
-- [zellij](https://github.com/zellij-org/zellij) — Terminal multiplexer and workspace (tmux alternative)
+- [zellij](https://github.com/zellij-org/zellij) — Terminal multiplexer and workspace
 - [fish](https://github.com/fish-shell/fish-shell) — User-friendly interactive shell
 
 ## Terminal tab title
@@ -55,9 +54,7 @@ For a friendly name on cloud VMs (e.g. `ip-172-31-19-84`), replace `${HOSTNAME%%
 
 **fish** doesn't need this snippet — machine identity comes from the `zj` helper below (the zellij session name).
 
-**Inside a multiplexer** the bare-shell title behaves differently:
-- **tmux** — not forwarded to the outer tab (default `set-titles off`).
-- **zellij** — the shell's title becomes the focused pane title, which zellij forwards to the outer terminal as `<session> | user@host`. The format (session-name prefix included) is not configurable, and is independent of `pane_frames`.
+**Inside zellij** the shell's title becomes the focused pane title, which zellij forwards to the outer terminal as `<session> | user@host` — the format (session-name prefix included) is not configurable, and is independent of `pane_frames`.
 
 ## Machine identity in zellij (fish)
 
