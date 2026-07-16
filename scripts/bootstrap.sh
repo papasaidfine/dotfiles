@@ -19,40 +19,17 @@ fail() { printf "\033[1;31mERR:\033[0m %s\n" "$1"; }
 # detect prior installs and skip them instead of redoing the work.
 export PATH="$HOME/.local/bin:$PATH"
 
-# --- chezmoi (install + pull source; applying is chosen from the menu below) ---
-if ask "Install chezmoi and pull dotfiles source?"; then
+# --- chezmoi ---
+if ask "Install chezmoi and apply dotfiles?"; then
   if command -v chezmoi >/dev/null 2>&1; then
     ok "chezmoi already installed"
   else
     info "Installing chezmoi to ~/.local/bin ..."
     sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
   fi
-  info "Pulling dotfiles source ..."
-  chezmoi init papasaidfine/dotfiles
-  ok "Dotfiles source ready"
-
-  # Config apply menu. Each entry is independent and idempotent — chezmoi only
-  # writes what differs from the source, so re-selecting is a no-op.
-  info "Which config do you want to apply?"
-  PS3="Select a number: "
-  select choice in \
-    "tmux" \
-    "zellij" \
-    "fish" \
-    "Claude Code" \
-    "oh-my-posh" \
-    "Apply all dotfiles"; do
-    case "$choice" in
-      "tmux")               chezmoi apply ~/.tmux.conf        && ok "tmux config applied" ;;
-      "zellij")             chezmoi apply ~/.config/zellij    && ok "zellij config applied" ;;
-      "fish")               chezmoi apply ~/.config/fish      && ok "fish config applied" ;;
-      "Claude Code")        chezmoi apply ~/.claude           && ok "Claude Code config applied" ;;
-      "oh-my-posh")         chezmoi apply ~/.cache/oh-my-posh && ok "oh-my-posh config applied" ;;
-      "Apply all dotfiles") chezmoi apply                     && ok "all dotfiles applied" ;;
-      *) warn "Invalid selection — enter a listed number"; continue ;;
-    esac
-    break
-  done
+  info "Applying dotfiles ..."
+  chezmoi init papasaidfine/dotfiles --apply
+  ok "Dotfiles applied"
 fi
 
 # --- tmux plugin manager ---
