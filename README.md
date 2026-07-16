@@ -7,7 +7,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 - **tmux** — Vi-mode keybindings, true color support, Nord theme, TPM plugin manager
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
-- **oh-my-posh** — Nordtron theme with terminal tab title (`~/.cache/oh-my-posh/themes/`)
+- **oh-my-posh** — Nordtron prompt theme (`~/.cache/oh-my-posh/themes/`)
 
 ## Quick start
 
@@ -45,14 +45,7 @@ Install the binary:
 curl -s https://ohmyposh.dev/install.sh | bash -s
 ```
 
-The nordtron theme is managed by chezmoi and will land at `~/.cache/oh-my-posh/themes/nordtron.omp.json` after `chezmoi apply`. It includes a `console_title_template` so the terminal tab shows `user@host` automatically. On first `chezmoi init` (including when run by the bootstrap script), chezmoi asks for a friendly name for this machine's terminal tab title — useful on cloud VMs named like `ip-172-31-19-84`. The answer is saved to `~/.config/chezmoi/chezmoi.toml`:
-
-```toml
-[data]
-    hostAlias = "risk-ranger"
-```
-
-Leave the prompt empty to keep showing the real hostname. To change it later, edit that file and re-run `chezmoi apply`.
+The nordtron theme is managed by chezmoi and lands at `~/.cache/oh-my-posh/themes/nordtron.omp.json` after `chezmoi apply`.
 
 Add to `~/.bashrc`:
 
@@ -60,14 +53,33 @@ Add to `~/.bashrc`:
 eval "$("$HOME/.local/bin/oh-my-posh" init bash --config ~/.cache/oh-my-posh/themes/nordtron.omp.json)"
 ```
 
-## Zellij configuration
+## Terminal tab title
 
-The configuration is managed by chezmoi and will land at `~/.config/zellij/config.kdl` after `chezmoi apply`.
+Show `user@host` in the terminal tab, independent of oh-my-posh. Add the snippet for your shell.
 
-Key preference settings:
-1. **Compact Layout**: Enabled by default (`default_layout "compact"`)
-2. **Hide Frames**: Pane frames are disabled (`pane_frames false`)
-3. **Theme**: Nord theme (`theme "nord"`)
+**bash** — add to `~/.bashrc` (after the oh-my-posh line, if you use it):
+
+```bash
+# Terminal tab title → user@host
+__set_tab_title() { printf '\033]0;%s@%s\007' "$USER" "${HOSTNAME%%.*}"; }
+case "$PROMPT_COMMAND" in
+  *__set_tab_title*) ;;
+  *) PROMPT_COMMAND="__set_tab_title${PROMPT_COMMAND:+; $PROMPT_COMMAND}" ;;
+esac
+```
+
+**fish** — add to `~/.config/fish/config.fish`:
+
+```fish
+# Terminal tab title → user@host
+function fish_title
+    echo "$USER@"(prompt_hostname)
+end
+```
+
+For a friendly name on cloud VMs (e.g. `ip-172-31-19-84`), replace `${HOSTNAME%%.*}` / `(prompt_hostname)` with a literal string.
+
+**Inside a multiplexer:** this only sets the title for a bare shell. Inside tmux it isn't forwarded to the outer tab (no `set-titles`). Inside zellij with `pane_frames false` (this repo's default) it isn't shown either — enable pane frames if you want it there.
 
 ## Manual usage
 

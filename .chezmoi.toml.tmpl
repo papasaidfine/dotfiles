@@ -1,4 +1,0 @@
-{{- $hostAlias := promptStringOnce . "hostAlias" "Friendly name for this machine's terminal tab title (leave empty to use the real hostname)" -}}
-
-[data]
-    hostAlias = {{ $hostAlias | quote }}
