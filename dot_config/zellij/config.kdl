@@ -48,8 +48,7 @@ keybinds clear-defaults=true {
         bind "n" { NewTab; SwitchToMode "normal"; }
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
-        bind "<" { MoveTab "left"; }
-        bind ">" { MoveTab "right"; }
+        bind "Ctrl t" { SwitchToMode "normal"; }
         bind "x" { CloseTab; SwitchToMode "normal"; }
         bind "tab" { ToggleTab; }
     }
@@ -118,7 +117,7 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "normal"
         }
-        bind "q" { Quit; }
+        bind "Ctrl o" { SwitchToMode "normal"; }
         bind "p" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
@@ -141,11 +140,49 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
     }
-    // The ONLY global key: Ctrl b opens the prefix (see the "tmux" mode below).
-    // Everything else lives behind it, so zellij no longer steals keys from
-    // foreground programs (previously Ctrl h/s/t/p/n/o/g/q and a pile of Alt+*).
+    shared_except "locked" {
+        bind "Alt left" { MoveFocusOrTab "left"; }
+        bind "Alt down" { MoveFocus "down"; }
+        bind "Alt up" { MoveFocus "up"; }
+        bind "Alt right" { MoveFocusOrTab "right"; }
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
+        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Ctrl g" { SwitchToMode "locked"; }
+        bind "Alt h" { MoveFocusOrTab "left"; }
+        bind "Alt i" { MoveTab "left"; }
+        bind "Alt j" { MoveFocus "down"; }
+        bind "Alt k" { MoveFocus "up"; }
+        bind "Alt l" { MoveFocusOrTab "right"; }
+        bind "Alt n" { NewPane; }
+        bind "Alt o" { MoveTab "right"; }
+        bind "Alt p" { TogglePaneInGroup; }
+        bind "Alt Shift p" { ToggleGroupMarking; }
+        bind "Ctrl q" { Quit; }
+    }
+    shared_except "locked" "move" {
+        bind "Ctrl h" { SwitchToMode "move"; }
+    }
+    shared_except "locked" "session" {
+        bind "Ctrl o" { SwitchToMode "session"; }
+    }
     shared_except "locked" "scroll" "search" "tmux" {
         bind "Ctrl b" { SwitchToMode "tmux"; }
+    }
+    shared_except "locked" "scroll" "search" {
+        bind "Ctrl s" { SwitchToMode "scroll"; }
+    }
+    shared_except "locked" "tab" {
+        bind "Ctrl t" { SwitchToMode "tab"; }
+    }
+    shared_except "locked" "pane" {
+        bind "Ctrl p" { SwitchToMode "pane"; }
+    }
+    shared_except "locked" "resize" {
+        bind "Ctrl n" { SwitchToMode "resize"; }
     }
     shared_except "normal" "locked" "entersearch" {
         bind "enter" { SwitchToMode "normal"; }
@@ -191,45 +228,26 @@ keybinds clear-defaults=true {
     shared_among "session" "tmux" {
         bind "d" { Detach; }
     }
-    // Prefix mode: entered with Ctrl b. Keys mirror tmux; capitalised/extra keys
-    // enter zellij's own modes. (x = close pane and d = detach come from the
-    // shared_among blocks below, so they work here too.)
     tmux {
-        // enter zellij modes
-        bind "P" { SwitchToMode "pane"; }
-        bind "t" { SwitchToMode "tab"; }
-        bind "r" { SwitchToMode "resize"; }
-        bind "m" { SwitchToMode "move"; }
-        bind "[" { SwitchToMode "scroll"; }
-        bind "s" { SwitchToMode "session"; }
-        bind "g" { SwitchToMode "locked"; }
-        // tmux-identical one-shots
-        bind "c" { NewTab; SwitchToMode "normal"; }
-        bind "n" { GoToNextTab; SwitchToMode "normal"; }
-        bind "p" { GoToPreviousTab; SwitchToMode "normal"; }
-        bind "1" { GoToTab 1; SwitchToMode "normal"; }
-        bind "2" { GoToTab 2; SwitchToMode "normal"; }
-        bind "3" { GoToTab 3; SwitchToMode "normal"; }
-        bind "4" { GoToTab 4; SwitchToMode "normal"; }
-        bind "5" { GoToTab 5; SwitchToMode "normal"; }
-        bind "6" { GoToTab 6; SwitchToMode "normal"; }
-        bind "7" { GoToTab 7; SwitchToMode "normal"; }
-        bind "8" { GoToTab 8; SwitchToMode "normal"; }
-        bind "9" { GoToTab 9; SwitchToMode "normal"; }
-        bind "," { SwitchToMode "renametab"; }
-        bind "&" { CloseTab; SwitchToMode "normal"; }
-        bind "\"" { NewPane "down"; SwitchToMode "normal"; }
-        bind "%" { NewPane "right"; SwitchToMode "normal"; }
-        bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
-        bind "o" { FocusNextPane; SwitchToMode "normal"; }
-        bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
-        bind "space" { NextSwapLayout; SwitchToMode "normal"; }
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "down" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "up" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "right" { MoveFocus "right"; SwitchToMode "normal"; }
-        // send a real Ctrl b through to the running program
+        bind "space" { NextSwapLayout; }
+        bind "\"" { NewPane "down"; SwitchToMode "normal"; }
+        bind "%" { NewPane "right"; SwitchToMode "normal"; }
+        bind "," { SwitchToMode "renametab"; }
+        bind "[" { SwitchToMode "scroll"; }
         bind "Ctrl b" { Write 2; SwitchToMode "normal"; }
+        bind "c" { NewTab; SwitchToMode "normal"; }
+        bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
+        bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
+        bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
+        bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
+        bind "n" { GoToNextTab; SwitchToMode "normal"; }
+        bind "o" { FocusNextPane; }
+        bind "p" { GoToPreviousTab; SwitchToMode "normal"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
     }
 }
 
