@@ -17,10 +17,10 @@ Bootstrap a fresh machine — installs chezmoi and applies the dotfiles:
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/bootstrap.sh)"
 ```
 
-Then pick apps from the checklist (multi-select, mise/pnpm/uv are required):
+Install apps from the checklist (multi-select, mise/pnpm/uv are required) — independent of bootstrap, run it on any machine:
 
 ```bash
-bash ~/.local/share/chezmoi/scripts/install_apps.sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/install_apps.sh)"
 ```
 
 ## The editor's collection

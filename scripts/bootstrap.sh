@@ -19,4 +19,4 @@ chezmoi init papasaidfine/dotfiles --apply
 ok "Dotfiles applied"
 
 info "Next: pick apps to install with"
-printf "    bash ~/.local/share/chezmoi/scripts/install_apps.sh\n"
+printf '    bash -c "$(curl -fsSL https://raw.githubusercontent.com/papasaidfine/dotfiles/main/scripts/install_apps.sh)"\n'
