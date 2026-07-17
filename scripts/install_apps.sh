@@ -36,46 +36,55 @@ for i in "${!APPS[@]}"; do
   [ "$i" -lt "$REQUIRED" ] && SEL[i]=1 || SEL[i]=0
 done
 
+COUNT=${#APPS[@]}
+cur=$REQUIRED  # start on the first toggleable item
+
 menu() {
-  echo
-  info "The editor's collection — pick apps to install"
-  for i in "${!APPS[@]}"; do
+  local i name desc mark
+  printf '\033[1;34m==>\033[0m %s\033[K\n' "The editor's collection — pick apps to install"
+  for ((i = 0; i < COUNT; i++)); do
     IFS='|' read -r name _ desc <<< "${APPS[$i]}"
-    if [ "$i" -lt "$REQUIRED" ]; then
-      mark="[x]"; desc="$desc (required)"
-    elif [ "${SEL[$i]}" = 1 ]; then
-      mark="[x]"
+    [ "$i" -lt "$REQUIRED" ] && desc="$desc (required)"
+    [ "${SEL[$i]}" = 1 ] && mark="[x]" || mark="[ ]"
+    if [ "$i" -eq "$cur" ]; then
+      printf '  \033[7m%s %-8s %s\033[0m\033[K\n' "$mark" "$name" "$desc"
     else
-      mark="[ ]"
+      printf '  %s %-8s %s\033[K\n' "$mark" "$name" "$desc"
     fi
-    printf "  %2d %s %-8s %s\n" "$((i+1))" "$mark" "$name" "$desc"
   done
-  echo
+  printf '  ↑/↓/j/k move · space toggle · a all · enter install · q quit\033[K\n'
 }
 
+printf '\033[?25l'
+trap 'printf "\033[?25h"' EXIT
+
+menu
 while true; do
-  menu
-  printf "Toggle by number (space-separated), 'a' = all, Enter = install: "
-  read -r input
-  [ -z "$input" ] && break
-  if [ "$input" = "a" ]; then
-    for i in "${!APPS[@]}"; do SEL[i]=1; done
-    continue
+  if ! IFS= read -rsn1 key; then key=q; fi
+  if [ "$key" = $'\x1b' ]; then
+    IFS= read -rsn2 -t 1 seq || seq=
+    case "$seq" in
+      '[A') key=k ;;
+      '[B') key=j ;;
+      *)    key= ;;
+    esac
   fi
-  for n in $input; do
-    case "$n" in *[!0-9]*|"") warn "not a number: $n"; continue ;; esac
-    i=$((n - 1))
-    if [ "$i" -lt 0 ] || [ "$i" -ge "${#APPS[@]}" ]; then
-      warn "out of range: $n"
-    elif [ "$i" -lt "$REQUIRED" ]; then
-      warn "${APPS[$i]%%|*} is required"
-    elif [ "${SEL[$i]}" = 1 ]; then
-      SEL[i]=0
-    else
-      SEL[i]=1
-    fi
-  done
+  case "$key" in
+    k) [ "$cur" -gt 0 ] && cur=$((cur - 1)) ;;
+    j) [ "$cur" -lt $((COUNT - 1)) ] && cur=$((cur + 1)) ;;
+    ' ')
+      if [ "$cur" -ge "$REQUIRED" ]; then
+        [ "${SEL[$cur]}" = 1 ] && SEL[cur]=0 || SEL[cur]=1
+      fi
+      ;;
+    a) for ((i = 0; i < COUNT; i++)); do SEL[i]=1; done ;;
+    '') break ;;
+    q) info "Aborted — nothing installed"; exit 0 ;;
+  esac
+  printf '\033[%dA' "$((COUNT + 2))"
+  menu
 done
+printf '\033[?25h'
 
 install_one() {
   case "$1" in
