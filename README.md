@@ -49,6 +49,22 @@ zj
 
 `<alias>` is the first line of `~/.config/host-alias` (a friendly name you write per machine, e.g. `risk-ranger`); without that file it falls back to the short hostname. chezmoi does not manage `~/.config/host-alias`.
 
+## Fish as default shell
+
+```bash
+command -v fish | sudo tee -a /etc/shells
+chsh -s "$(command -v fish)"
+```
+
+No password for chsh? `sudo chsh -s "$(command -v fish)" "$USER"`, or add to `~/.bashrc`:
+
+```bash
+# Safely switch to fish if it exists and the shell is interactive
+if [[ $- == *i* ]] && command -v fish &> /dev/null; then
+    exec fish
+fi
+```
+
 ## Manual usage
 
 ```bash
