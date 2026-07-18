@@ -419,6 +419,11 @@ pane_frames false
 //   - false
 // 
 // session_serialization false
+//
+// Disabled on purpose: do NOT resurrect closed sessions. With this false, zellij
+// stops auto-writing the session-layout.kdl snapshot, so closing all tabs ends the
+// session for good and the next `zj` starts fresh instead of restoring old tabs/cwds.
+session_serialization false
  
 // Whether pane viewports are serialized along with the session, default is false
 // Options:

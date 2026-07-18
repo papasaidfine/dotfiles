@@ -77,7 +77,7 @@ fi
 
 `<alias>` is the first line of `~/.config/host-alias` (a friendly name you write per machine, e.g. `risk-ranger`); without that file it falls back to the short hostname. chezmoi does not manage `~/.config/host-alias`.
 
-`zj` passes `--forget`, so re-running it after **closing** a session (all tabs gone → session exited) starts fresh instead of resurrecting the old tabs, cwds, and commands from zellij's serialized snapshot. A **detached** session (still running, just disconnected) is unaffected — `zj` reattaches to it as usual.
+Session resurrection is disabled (`session_serialization false` in `config.kdl`), so closing all tabs ends the session for good — re-running `zj` starts fresh rather than restoring the old tabs, cwds, and commands. A **detached** session (still running, just disconnected) still reattaches as usual.
 
 ## Manual usage
 
