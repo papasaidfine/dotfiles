@@ -2,5 +2,5 @@
 # Guarded so machines without nvim are unaffected.
 if type -q nvim
     abbr -a v nvim
-    abbr -a nview 'nvim -R'
+    abbr -a nv 'nvim -R'
 end

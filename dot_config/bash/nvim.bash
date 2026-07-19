@@ -4,5 +4,5 @@
 # Guarded so machines without nvim are unaffected.
 if command -v nvim >/dev/null 2>&1; then
   alias v=nvim
-  alias nview='nvim -R'
+  alias nv='nvim -R'
 fi
