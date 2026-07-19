@@ -7,9 +7,9 @@ ok()   { printf "\033[1;32m OK:\033[0m %s\n" "$1"; }
 
 # mise installs to ~/.local/bin; tools it manages are exposed via shims
 export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
-# pnpm global bin dir (for codex)
+# pnpm global bin dir (for codex) — pnpm puts wrappers in $PNPM_HOME/bin
 export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
-export PATH="$PNPM_HOME:$PATH"
+export PATH="$PNPM_HOME/bin:$PATH"
 
 # name|binary|description — first REQUIRED entries are always installed
 APPS=(
