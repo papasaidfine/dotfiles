@@ -1,7 +1,8 @@
 ## Package Managers
 
+- CLI tools & language runtimes: install with `mise use -g <tool>` (mise is the polyglot version manager on this machine) — this includes the Node.js runtime itself. Don't reach for the system package manager or manual downloads for these.
 - Python: always use `uv`. Do not touch the global `python`/`python3`.
-- JavaScript/TypeScript: always use `pnpm` over `npm`, unless the project already uses npm (e.g. has `package-lock.json`).
+- Node packages: always use `pnpm` over `npm`, unless the project already uses npm (e.g. has `package-lock.json`).
 
 ## Attribution
 
