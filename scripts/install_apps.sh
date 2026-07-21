@@ -22,6 +22,7 @@ APPS=(
   "yazi|yazi|terminal file manager"
   "jq|jq|JSON processor"
   "ripgrep|rg|fast grep, used by neovim Telescope"
+  "zoxide|zoxide|smarter cd, jumps to frecent directories"
   "lazygit|lazygit|git TUI"
   "lazyport|lazyport|ports/processes TUI"
   "zellij|zellij|terminal multiplexer"

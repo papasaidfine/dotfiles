@@ -36,6 +36,7 @@ What `install_apps.sh` offers — everything installs through mise unless noted:
 - [yazi](https://github.com/sxyazi/yazi) — terminal file manager
 - [jq](https://github.com/jqlang/jq) — JSON processor
 - [ripgrep](https://github.com/BurntSushi/ripgrep) — fast grep, used by neovim Telescope
+- [zoxide](https://github.com/ajeetdsouza/zoxide) — smarter cd, jumps to frecent directories
 - [lazygit](https://github.com/jesseduffield/lazygit) — git TUI
 - [lazyport](https://github.com/papasaidfine/lazyport) — ports/processes TUI
 - [zellij](https://github.com/zellij-org/zellij) — terminal multiplexer
