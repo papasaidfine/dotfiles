@@ -9,6 +9,31 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 - **fish** — `zj` helper + PATH setup + mise activation (`~/.config/fish/`)
 - **bash** — `zj` helper (`~/.config/bash/zj.bash`)
 
+### How mise tools get on PATH
+
+`mise use -g <tool>` doesn't put anything on PATH by itself — the shell has to
+be told about it, in one of two ways, and the configs here set up both:
+
+- **`mise activate`** puts the real install paths on PATH and refreshes them as
+  you move between projects, so per-project tool versions are respected. It
+  only applies to shells that source the config, and within a session it won't
+  notice a tool you just installed.
+- **shims** (`~/.local/share/mise/shims`) are small wrappers mise writes at
+  install time. They cost a little startup overhead per call, but they work
+  everywhere — non-interactive shells, and programs launched outside a shell
+  that never run the activation hook — and a newly installed tool is usable
+  right away without restarting the shell.
+
+Shims go on PATH first so activation can prepend the real paths ahead of them;
+that way activation wins where it applies and shims cover everything else.
+
+fish gets this automatically from `~/.config/fish/conf.d/`. bash needs one line
+in `~/.bashrc` (chezmoi does not manage that file):
+
+```bash
+source ~/.config/bash/mise.bash
+```
+
 ## Quick start
 
 Bootstrap a fresh machine — installs chezmoi and applies the dotfiles:

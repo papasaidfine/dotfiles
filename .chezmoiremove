@@ -1,0 +1,4 @@
+# Renamed to 00-path.fish so it sorts ahead of the other conf.d snippets.
+# chezmoi leaves files behind when they drop out of the source state, so the
+# old copy has to be removed explicitly or it lingers on applied machines.
+.config/fish/conf.d/path.fish
