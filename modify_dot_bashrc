@@ -1,0 +1,41 @@
+#!/bin/sh
+# chezmoi hands this script the current ~/.bashrc on stdin and takes stdout as
+# the new contents. It passes everything already there through untouched and
+# appends one guarded block that sources ~/.config/bash/init.bash, which is
+# what makes the snippets in ~/.config/bash actually load.
+#
+# chezmoi can't manage ~/.bashrc as a plain file — the distro ships its own and
+# overwriting it would throw away history settings, the prompt, and completion.
+# Appending is also why this runs as a modify_ script rather than a run_once_
+# one: it re-adds the block if it ever goes missing, and does nothing when it's
+# already present.
+set -eu
+
+marker='# >>> chezmoi:bash snippets >>>'
+
+current=$(mktemp)
+trap 'rm -f "$current"' EXIT
+cat >"$current"
+cat "$current"
+
+if grep -qF "$marker" "$current"; then
+    exit 0
+fi
+
+# Separate the block from whatever is already there, closing off a final line
+# that lacks a newline. Skipped entirely when the file is empty or absent.
+if [ -s "$current" ]; then
+    [ -n "$(tail -c 1 "$current")" ] && echo
+    echo
+fi
+
+cat <<'BLOCK'
+# >>> chezmoi:bash snippets >>>
+# Managed by chezmoi (modify_dot_bashrc) — edits inside this block are kept,
+# but deleting the markers makes the next `chezmoi apply` add it back.
+# Keep this above anything that looks for a mise-installed tool, e.g. an
+# `exec fish` line: fish is installed by mise, so it isn't on PATH until this
+# has run.
+[ -r "$HOME/.config/bash/init.bash" ] && . "$HOME/.config/bash/init.bash"
+# <<< chezmoi:bash snippets <<<
+BLOCK

@@ -6,8 +6,23 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 
 - **zellij** — Compact layout, hidden pane frames, and Nord theme (`~/.config/zellij/`)
 - **Claude Code** — Project-level settings and instructions (`~/.claude/`)
-- **fish** — `zj` helper + PATH setup + mise activation (`~/.config/fish/`)
-- **bash** — `zj` helper (`~/.config/bash/zj.bash`)
+- **fish** — `zj` helper + PATH setup + mise activation (`~/.config/fish/conf.d/`)
+- **bash** — the same, mirrored (`~/.config/bash/`)
+
+### Shell snippets
+
+Both shells load a directory of small snippets — mise activation, PATH, the
+nvim aliases, the `zj` helper — kept in sync between `~/.config/fish/conf.d/`
+and `~/.config/bash/`.
+
+fish sources `conf.d/` on its own. bash has no equivalent, so `~/.bashrc` gets
+one line appended, sourcing `~/.config/bash/init.bash`, which loads the rest.
+chezmoi does that through `modify_dot_bashrc`, which appends the block and
+leaves the rest of the file alone — it never replaces the `~/.bashrc` your
+distro shipped. Nothing to wire up by hand.
+
+Both directories load in sorted order, and `mise` sorts first on purpose: every
+other snippet guards on a tool that only exists once mise has put it on PATH.
 
 ### How mise tools get on PATH
 
@@ -27,12 +42,8 @@ be told about it, in one of two ways, and the configs here set up both:
 Shims go on PATH first so activation can prepend the real paths ahead of them;
 that way activation wins where it applies and shims cover everything else.
 
-fish gets this automatically from `~/.config/fish/conf.d/`. bash needs one line
-in `~/.bashrc` (chezmoi does not manage that file):
-
-```bash
-source ~/.config/bash/mise.bash
-```
+Both shells set this up via the snippets above, so `mise use -g <tool>` is all
+you need to run.
 
 ## Quick start
 
@@ -94,12 +105,15 @@ if [[ $- == *i* ]] && command -v fish &> /dev/null; then
 fi
 ```
 
+Put that **below** the `chezmoi:bash snippets` block. fish is installed by mise,
+so it isn't on PATH until that block has run, and above it the `command -v fish`
+test silently fails and you stay in bash.
+
 ## Machine identity in zellij
 
 `zj` attaches to — or creates — a zellij session named `user@<alias>`, so the machine is identifiable in zellij's status bar (and the outer terminal title). It's shell-independent — zellij owns the session name — so both shells provide the same `zj` command:
 
-- **fish** — provided automatically (chezmoi-managed function); just run `zj`.
-- **bash** — add `source ~/.config/bash/zj.bash` to `~/.bashrc`, then run `zj`.
+Both get it automatically from the shell snippets — just run `zj`.
 
 `<alias>` is the first line of `~/.config/host-alias` (a friendly name you write per machine, e.g. `risk-ranger`); without that file it falls back to the short hostname. chezmoi does not manage `~/.config/host-alias`.
 

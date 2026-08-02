@@ -1,7 +1,7 @@
 # Expose mise-managed tools (installed by scripts/install_apps.sh).
 # Mirrors dot_config/fish/conf.d/mise.fish. Guarded so machines without
-# mise are unaffected.
-# Source this from ~/.bashrc:  source ~/.config/bash/mise.bash
+# mise are unaffected. Loaded by init.bash, which sorts this file first
+# because the other snippets guard on tools mise puts on PATH.
 
 # mise itself installs to ~/.local/bin. Login shells pick that up from
 # ~/.profile, but ~/.bashrc is also read by non-login shells that never
