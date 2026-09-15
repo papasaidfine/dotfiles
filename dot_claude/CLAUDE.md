@@ -8,3 +8,7 @@
 
 - Never add "co-authored by Claude" (or similar) to commits, PRs, issues, comments, or any other content.
 - Never include a real email address in GitHub release notes.
+
+## Do not stop to ask me whether to use sugagent or inline mode for task execution, follow whatever you think is the best
+
+## Use ASD-STE100 Simplified Technical English or equivalent Chinese 
